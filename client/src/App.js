@@ -1,23 +1,20 @@
 import React from 'react';
+import Navbar from './components/Navbar';
+import {BrowserRouter, Route, Switch} from "react-router-dom";
+import Search from "./components/Search";
+import Saved from "./components/Saved";
 
 function App() {
   return (
+    <BrowserRouter>
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Navbar/>
+      <Switch>
+      <Route exact path={["/", "/search"]} component={Search}/>
+      <Route exact path={"/saved"} component={Saved}/>
+      </Switch>
     </div>
+    </BrowserRouter>
   );
 }
 
