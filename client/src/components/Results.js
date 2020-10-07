@@ -3,34 +3,36 @@ import Thumbnail from "./Thumbnail";
 import { Container, Row, Col } from "./Grid";
 
 export function Results({ children }) {
-    console.log("children", children);
+    // console.log("children", children);
     return (
         <ul className="list-group">{children}</ul>
     )
 
 }
 
+
 export function ResultsListItem(props) {
     console.log("props: ", props);
     return (
         <li className="list-group-item">
-            <Container>
+            <Container >
+            <Row>
+                <button index={props.key_id} onClick={props.saveBook} type="button" className="btn btn-dark pull-right">Save</button>
+            </Row>
+            <br/>
                 <Row>
                     <Col size="xs-4 sm-2">
-                        <Thumbnail src={props.thumbnail} />
+                        <Thumbnail src={props.image} />
                     </Col>
                     <Col size="xs-8 sm-9">
-                        <h3>{props.title}</h3>
-                        <p>
-                            Ingredients: {props.ingredients}
+                        <h4>{props.title}</h4>
+                        <p><strong>Authors: </strong>{props.authors}</p>
+                        <p><strong>Description: </strong> {props.description}
                         </p>
-                        <a
-                            rel="noreferrer noopener"
+                        <a rel="noreferrer noopener"
                             target="_blank"
-                            href={props.href}
-                        >
-                            Go to recipe!
-              </a>
+                            href={props.link}>
+                            More Info...</a>
                     </Col>
                 </Row>
             </Container>

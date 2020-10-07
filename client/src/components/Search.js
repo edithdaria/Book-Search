@@ -10,21 +10,24 @@ const Search = () => {
 
     const handleInputChage = (e) => {
         const {value}  = e.target;
-        //console.log("value: ", value.toLowerCase().replace(/\s/g, '%'));
         setSearch(value.toLowerCase().replace(/\s/g, '%'));
     }
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
-        const query = "https://www.googleapis.com/books/v1/volumes?q=" + search;
-        console.log(query);
         axios.get("https://www.googleapis.com/books/v1/volumes?q=" + search)
         .then(res =>{
+console.dir(res.data.items)
             setResults(res.data.items);
         }).catch(err => console.log(err));
     }
 
-    console.log("results: ", results); 
+    const saveBook = (e) => {
+        e.preventDefault();
+        console.dir(e.target)
+        const id = e.target.getAttribute("index");
+        console.log("save book:" +  id);
+    } 
 
     return (
         <div>
@@ -45,12 +48,17 @@ const Search = () => {
             <Row>
           <Col size="xs-12">
             <Results>
-                {results.map(result => {
+                {results.map((result) => {
                   return (
                     <ResultsListItem
+                    key_id = {result.id}
                     key = {result.id}
                     title = {result.volumeInfo.title}
-                    thumbnail = {result.volumeInfo.imageLinks.thumbnail}
+                    authors = {result.volumeInfo.authors}
+                    description = {result.volumeInfo.description}
+                    image = {result.volumeInfo.imageLinks.thumbnail}
+                    link = {result.volumeInfo.infoLink}
+                    saveBook = {saveBook}
                     />
                   )
                 })}
