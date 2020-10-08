@@ -1,7 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import {Results, ResultsListItem} from "./Results";
+import { Results, ResultsListItem } from "./Results";
 import { Row, Col, Container } from "./Grid";
+import API from "../utils/API";
 
 const Search = () => {
 
@@ -9,25 +10,40 @@ const Search = () => {
     const [results, setResults] = useState([]);
 
     const handleInputChage = (e) => {
-        const {value}  = e.target;
+        const { value } = e.target;
         setSearch(value.toLowerCase().replace(/\s/g, '%'));
     }
 
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         axios.get("https://www.googleapis.com/books/v1/volumes?q=" + search)
-        .then(res =>{
-console.dir(res.data.items)
-            setResults(res.data.items);
-        }).catch(err => console.log(err));
+            .then(res => {
+                console.log("res" , res.data.items)
+                setResults( res.data.items.map((data) => {
+                    return {
+                    key: data.id,
+                    title: data.volumeInfo.title,
+                    authors: data.volumeInfo.authors,
+                    description: data.volumeInfo.description,
+                    image: data.volumeInfo.imageLinks.thumbnail,
+                    link: data.volumeInfo.infoLink
+                    }
+                }))
+            }).catch(err => console.log(err));
     }
 
     const saveBook = (e) => {
         e.preventDefault();
         console.dir(e.target)
         const id = e.target.getAttribute("index");
-        console.log("save book:" +  id);
-    } 
+        console.log("save book:" + id);
+        const bookData = results.filter(result => id === result.key)
+        console.log("books",bookData)
+        API.saveBook(bookData)
+        .then((res) => {
+        alert("Book Saved Successfully!!")})
+        .catch(err => console.log(err)) 
+    }
 
     return (
         <div>
@@ -45,27 +61,28 @@ console.dir(res.data.items)
                 </center>
             </form>
             <Container>
-            <Row>
-          <Col size="xs-12">
-            <Results>
-                {results.map((result) => {
-                  return (
-                    <ResultsListItem
-                    key_id = {result.id}
-                    key = {result.id}
-                    title = {result.volumeInfo.title}
-                    authors = {result.volumeInfo.authors}
-                    description = {result.volumeInfo.description}
-                    image = {result.volumeInfo.imageLinks.thumbnail}
-                    link = {result.volumeInfo.infoLink}
-                    saveBook = {saveBook}
-                    />
-                  )
-                })}
-            </Results>
-          </Col>
-        </Row>
-        </Container>
+                <Row>
+                    <Col size="xs-12">
+                        <Results>
+                            {results.map((result) => {
+                                return (
+                                    <ResultsListItem
+                                        key_id={result.key}
+                                        key={result.key}
+                                        title={result.title}
+                                        authors={result.authors}
+                                        description={result.description}
+                                        image={result.image}
+                                        link={result.link}
+                                        saveBook={saveBook}
+                                        buttonText="Save"
+                                    />
+                                )
+                            })}
+                        </Results>
+                    </Col>
+                </Row>
+            </Container>
         </div>
     )
 
