@@ -3,6 +3,7 @@ import { Results, ResultsListItem } from "./Results";
 import { Row, Col, Container } from "./Grid";
 import API from "../utils/API";
 
+
 const Saved = () => {
 
       // Initialize books as an empty array
@@ -16,10 +17,25 @@ const Saved = () => {
         // Add code here to get all books from the database and store them using setBooks
         API.getBooks()
         .then((res) => {
-          console.log("response: " , res);
+          console.log("response: " , res.data);
             setBooks(res.data)})
         .catch(err => console.log(err))
   
+      }
+
+      function deleteBook(e){
+          e.preventDefault();
+          const id = e.target.getAttribute("index");
+          console.log("delete book:" + id);
+          
+        //   const bookData = books.filter(book => id === book.key_id)
+        //   console.log("books",bookData);
+          API.deleteBook(id)
+          .then((res) => {
+              console.log(res);
+            loadBooks()
+          alert("Book Deleted Successfully!!")})
+          .catch(err => console.log(err)) 
       }
 
 
@@ -33,21 +49,21 @@ const Saved = () => {
                 <Row>
                     <Col size="xs-12">
                         <Results>
-                            {/* {results.map((result) => {
+                            {books.map((book) => {
                                 return (
                                     <ResultsListItem
-                                        key_id={result.id}
-                                        key={result.id}
-                                        title={result.volumeInfo.title}
-                                        authors={result.volumeInfo.authors}
-                                        description={result.volumeInfo.description}
-                                        image={result.volumeInfo.imageLinks.thumbnail}
-                                        link={result.volumeInfo.infoLink}
-                                        saveBook={saveBook}
+                                        key_id={book.key_id}
+                                        key={book.key_id}
+                                        title={book.title}
+                                        authors={book.authors}
+                                        description={book.description}
+                                        image={book.image}
+                                        link={book.link}
+                                        saveBook={deleteBook}
                                         buttonText="Delete"
                                     />
                                 )
-                            })} */}
+                            })}
                         </Results>
                     </Col>
                 </Row>

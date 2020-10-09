@@ -1,7 +1,7 @@
 const express = require ("express");
 const mongoose = require("mongoose");
 const routes = require("./routes");
-const Book = require("./models");
+require("dotenv").config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -15,7 +15,12 @@ if(process.env.NODE_ENV === "production") {
 
 app.use(routes);
 
-mongoose.connect(process.env.MONGODB_URI || "mongodb+srv://user:O6ttSFIkJBTuvXVG@cluster0.rozpc.mongodb.net/Book?retryWrites=true&w=majority");
+mongoose.connect(process.env.MONGODB_URI,{
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+});
 
 app.listen(PORT, function () {
     console.log(`🌎 ==> API Server now listening on PORT ${PORT}!`);

@@ -21,7 +21,7 @@ const Search = () => {
                 console.log("res" , res.data.items)
                 setResults( res.data.items.map((data) => {
                     return {
-                    key: data.id,
+                    key_id: data.id,
                     title: data.volumeInfo.title,
                     authors: data.volumeInfo.authors,
                     description: data.volumeInfo.description,
@@ -37,7 +37,7 @@ const Search = () => {
         console.dir(e.target)
         const id = e.target.getAttribute("index");
         console.log("save book:" + id);
-        const bookData = results.filter(result => id === result.key)
+        const bookData = results.filter(result => id === result.key_id)
         console.log("books",bookData)
         API.saveBook(bookData)
         .then((res) => {
@@ -67,8 +67,8 @@ const Search = () => {
                             {results.map((result) => {
                                 return (
                                     <ResultsListItem
-                                        key_id={result.key}
-                                        key={result.key}
+                                        key_id={result.key_id}
+                                        key={result.key_id}
                                         title={result.title}
                                         authors={result.authors}
                                         description={result.description}
