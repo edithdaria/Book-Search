@@ -20,6 +20,7 @@ A React-based Google Books Search app that displays books based on user searches
 run the following from root directory: npm i; npm start; Runs the app in the development mode; React opens the app to view it in the browser.
 
 ## Usage
+Open the app using the followoing link: [Heroku Deployed app](https://google-book-search-and-save.herokuapp.com/)
 Search any phrase or book titles and get information on books  retrieved from google api.
 
 ## Contribute
