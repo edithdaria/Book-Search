@@ -18,7 +18,7 @@ const Search = () => {
         e.preventDefault();
         axios.get("https://www.googleapis.com/books/v1/volumes?q=" + search)
             .then(res => {
-                console.log("res" , res.data.items)
+                console.log("res" , res.data.items);
                 setResults( res.data.items.map((data) => {
                     return {
                     key_id: data.id,
@@ -29,15 +29,19 @@ const Search = () => {
                     link: data.volumeInfo.infoLink
                     }
                 }))
-            }).catch(err => console.log(err));
-    }
+            }).catch(err => 
+                {
+                    console.log(err);
+                alert("Please enter a valid book name.");
+            })
+            }
 
     const saveBook = (e) => {
         e.preventDefault();
         console.dir(e.target)
         const id = e.target.getAttribute("index");
         console.log("save book:" + id);
-        const bookData = results.filter(result => id === result.key_id)
+        const bookData = results.filter(result => id === result.key_id);
         console.log("books",bookData)
         API.saveBook(bookData)
         .then((res) => {
