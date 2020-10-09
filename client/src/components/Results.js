@@ -17,7 +17,7 @@ export function ResultsListItem(props) {
         <li className="list-group-item">
             <Container >
             <Row>
-                <button key={props.key_id} index={props.key_id} onClick={props.saveBook} type="button" className="btn btn-dark pull-right">{props.buttonText}</button>
+                <button id={props.id} key={props.key_id} index={props.key_id} onClick={props.saveBook} type="button" className="btn btn-dark pull-right">{props.buttonText}</button>
             </Row>
             <br/>
                 <Row>

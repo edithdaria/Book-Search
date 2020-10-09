@@ -25,7 +25,7 @@ const Saved = () => {
 
       function deleteBook(e){
           e.preventDefault();
-          const id = e.target.getAttribute("index");
+          const id = e.target.getAttribute("id");
           console.log("delete book:" + id);
           
         //   const bookData = books.filter(book => id === book.key_id)
@@ -59,6 +59,7 @@ const Saved = () => {
                                         description={book.description}
                                         image={book.image}
                                         link={book.link}
+                                        id={book._id}
                                         saveBook={deleteBook}
                                         buttonText="Delete"
                                     />
