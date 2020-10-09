@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Description
-A React-based Google Books Search app that displays books based on user searches. Node, Express and MongoDB are used to allow users to 
+A React-based Google Books Search app that displays books based on user searches. Node, Express and MongoDB are used to allow users to save books and view them later and delete it from the saved list if needed.
 
 ## Table Of Contents
 * [Installation](#Installation)
